@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "feather-icons": "^4.29.1"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "@symfony/stimulus-bridge": "^3.2.0",
+    "@symfony/webpack-encore": "^4.5.0",
+    "bootstrap": "^5.3.2",
+    "webpack-notifier": "^1.15.0"
+  },
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  }
+}

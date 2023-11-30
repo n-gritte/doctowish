@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DoctorController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div>
+    <div class="col-3 mb-4">   
+        <h1>{{doctor.title}}</h1>
+    </div>
+    <div class="col-3 mb-4">   
+        <p class="f-2r">Numero siret: {{doctor.siret}}</p>
+    </div>
+    <div class="col-3 mb-4">   
+        <p class="f-2r">Adresse: {{doctor.address1}}<br>{{doctor.address2}}<br>{{doctor.zipcode}} {{doctor.city}}<br>{{doctor.country}}</p>
+    </div>
+
+    {% if doctor.consultations|length > 0 %}
+        {% for consultation in doctor.consultations %}  
+            <div class="col-3 mb-4">   
+                <h2>{{consultation.title}}</h2><a href="{{path('app_doctor_consultationdelete',{'id':consultation.id})}}"><i data-feather="trash-2"></i></a>
+            </div>
+            <div class="col-3 mb-4">   
+                <p class="f-2r">Durée: {{consultation.duration}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-3 mb-4">   
+            <p class="f-2r">Pas encore de motif de consultation</p>
+        </div>
+    {% endif %}
+
+    {# {% set availabilityArray = practitioner.availability|json_decode %} #}
+
+    {# {% if availabilityArray is not null %}
+        {% for slot in availabilityArray %}  
+            <div class="col-3 mb-4">   
+                <h2>{{slot.start|date("d/m/Y")}} de {{slot.start|date("H:i")}} à {{slot.end|date("H:i")}}</h2>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-3 mb-4">   
+            <p class="f-2r">Ajouter des créneaux</p>
+        </div>
+    {% endif %} #}
+
+    {% if availability|length > 0 %}
+        {% for slot in availability %}  
+            <div class="col-3 mb-4">   
+                <h2>{{slot.start.date|date("d/m/Y")}} de {{slot.start.date|date("H:i")}} à {{slot.end.date|date("H:i")}}</h2>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-3 mb-4">   
+            <p class="f-2r">Ajouter des créneaux</p>
+        </div>
+    {% endif %}
+
+    {{ form_errors(formDoctor) }}
+    {{ form_errors(formConsultation) }}
+    {{ form_errors(formAvailability) }}
+
+    {{ form_start(formDoctor) }}
+        {{ form_row(formDoctor.title, {
+            label: 'Titre'
+        }) }}
+        {{ form_row(formDoctor.address1, {
+            label: 'Adresse'
+        }) }}
+        {{ form_row(formDoctor.address2, {
+            label: 'Complement'
+        }) }}
+        {{ form_row(formDoctor.city, {
+            label: 'Ville'
+        }) }}
+        {{ form_row(formDoctor.zipcode, {
+            label: 'Code postale'
+        }) }}
+        {{ form_row(formDoctor.country, {
+            label: 'Pays'
+        }) }}
+        {{ form_row(formDoctor.siret, {
+            label: 'Numero siret'
+        }) }}
+        {{ form_row(formDoctor.specialities, {
+            label: 'Spécialités'
+        }) }}
+
+        <button type="submit" class="btn">Modifier le Cabinet</button>
+    {{ form_end(formDoctor) }}
+
+    {{ form_start(formConsultation) }}
+        {{ form_row(formConsultation.title, {
+            label: 'Motif de consultation'
+        }) }}
+        {{ form_row(formConsultation.duration, {
+            label: 'Durée (min)'
+        }) }}
+
+        <button type="submit" class="btn">Ajouter un motif de consultation</button>
+    {{ form_end(formConsultation) }}
+
+    {{ form_start(formAvailability) }}
+        {{ form_row(formAvailability.start, {
+            label: 'Motif de consultation'
+        }) }}
+        {{ form_row(formAvailability.end, {
+            label: 'Durée (min)'
+        }) }}
+        {{ form_row(formAvailability._token) }}
+        <button type="submit" class="btn">Ajouter une disponibilité</button>
+    {{ form_end(formConsultation) }}
+</div>
+{% endblock %}

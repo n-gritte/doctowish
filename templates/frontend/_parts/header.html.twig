@@ -1,0 +1,27 @@
+<header class="row">
+    <div class="col">
+        {% if app.user %}
+            <a class="btn btn-outline-info mx-3" aria-current="page" href="{{path('app_logout')}}">Se deconnecter</a>
+        {% else %}
+            <a class="btn btn-outline-info mx-3" aria-current="page" href="{{path('app_login')}}">Connection</a>
+            <a class="btn btn-outline-info mx-3" aria-current="page" href="{{path('app_register')}}">Inscription</a>
+        {% endif %}
+    </div>
+    <div class="col">
+        <a class="navbar-brand font-title" href="{{path('app_home')}}">Doctowish</a>
+    </div>
+    {# <form class="d-flex mb-0" role="search">
+        <a href="{{path('app_search')}}" class="btn btn-outline-white w-12r" type="submit"><i class="feather-search"></i> Search</a>
+    </form> #}
+    <section class="col search">
+        <form class="d-flex mb-0" role="search" method="POST" action="{{path('app_search')}}">
+            {# <input type="text" placeholder="Rechercher un praticien"> #}
+            <input type="text" class="form-control" placeholder="Rechercher un praticien"  name="terms" {% if terms is defined %}value="{{terms}}"{% endif %}>
+            {# <button type="submit">Rechercher</button> #}
+            {# <a href="{{path('app_search')}}" class="btn btn-outline-white w-12r" type="submit"><i class="feather-search"></i> Search</a> #}
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary">Rechercher<i data-feather="search"></i></button>
+            </div>
+        </form>
+    </section>
+</header>

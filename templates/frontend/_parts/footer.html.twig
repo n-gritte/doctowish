@@ -1,0 +1,14 @@
+<footer>
+    <nav class="navbar">
+        <ul class="list-group-horizontal w-100 row">
+            <li class="list-group-item col"><a class="nav-bar-link" href="{{path('app_home')}}"><div class="d-flex flex-column align-items-center"><i data-feather="home"></i><span>Accueil</span></div></a></li>
+            <li class="list-group-item col"><a class="nav-bar-link" href="#"><div class="d-flex flex-column align-items-center"><i data-feather="calendar"></i><span>Rendez-vous</span></div></a></li>
+            <li class="list-group-item col"><a class="nav-bar-link" href="#"><div class="d-flex flex-column align-items-center"><i data-feather="file-text"></i><span>Documents</span></div></a></li>
+            <li class="list-group-item col"><a class="nav-bar-link" href="#"><div class="d-flex flex-column align-items-center"><i data-feather="mail"></i><span>Messages</span></div></a></li>
+            {% if is_granted('ROLE_PRACTITIONER') %}
+                <li class="list-group-item col"><a class="nav-bar-link" href="{{path('app_doctor')}}"><div class="d-flex flex-column align-items-center"><i data-feather="heart"></i><span>Cabinets</span></div></a></li>
+            {% endif %}
+            <li class="list-group-item col"><a class="nav-bar-link" href="{{path('app_user')}}"><div class="d-flex flex-column align-items-center"><i data-feather="user"></i><span>Compte</span></div></a></li>
+        </ul>
+    </nav>
+</footer>

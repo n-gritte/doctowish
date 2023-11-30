@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<main>
+    <section class="doctors-list">
+    <h1>Prenez votre rendez-vous en ligne</h1>
+    {{ form_errors(formAppointment) }}
+
+    {{ form_start(formAppointment) }}
+        {{ form_row(formAppointment.consultation, {
+            label: 'Choisissez votre motif de consultation'
+        }) }}
+        <span>Créneaux disponibles :</span>
+        <ul>
+            {% for slot in doctor.availability %}  
+                <div class="col-3 mb-4">   
+                    <h2>{{slot.start.date|date("d/m/Y")}} de {{slot.start.date|date("H:i")}} à {{slot.end.date|date("H:i")}}</h2>
+                </div>
+            {% endfor %}
+        </ul>
+        {{ form_row(formAppointment.start, {
+            label: 'Choisissez la date de consultation'
+        }) }}
+        <button type="submit" class="btn">Prendre un rdv</button>
+    {{ form_end(formAppointment) }}
+</main>
+{% endblock %}

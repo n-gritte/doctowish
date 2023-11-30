@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SearchController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+    {# Les Médecins #}
+    {% if doctors|length > 0 %}
+    {{doctors|length}} résultats
+        {% for doctor in doctors %}
+            <div class="card search-result-card">
+                <div class="col search-result-presentation">
+                    <div><a href="{{path('app_rdv',{'id':doctor.id})}}">{{doctor.title}}</a></div>
+                    <div>Praticien : {{doctor.user.firstname}} {{doctor.user.lastname}}</div>
+                    {% if doctor.specialities|length > 0 %}
+                        <div>
+                            {% for speciality in doctor.specialities %}
+                                <span class="speciliaty-item">{{speciality.title}}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div>
+                        {{doctor.address1}}<br>
+                        {% if doctor.address2 %}{{doctor.address2}}<br>{% endif %}
+                        {{doctor.zipcode}} {{doctor.city}}
+                    </div>
+                    <a class="btn btn-primary" href="{{path('app_rdv',{'id':doctor.id})}}">vers le cabinet</a>
+                </div>
+                <div class="col search-result-agenda">
+                    {% if doctor.availability|length > 0 %}
+                        {% for slot in doctor.availability %}
+                            {% if slot.start.date|date('U') > 'now'|date('U') %}
+                                prochain RDV le {{slot.start.date|date("d/m/Y")}} à {{slot.start.date|date("H:i")}}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {# Les Specialités #}
+    {% if specialities|length > 0 %}
+    Vous rechercher une professionnel dans quelle spécialité ?
+        <ul>
+            {% for speciality in specialities %}
+                <li><a href="">{{speciality.title}}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if doctors|length == 0 and specialities|length == 0 %}
+        {% if cities|length > 0 %}
+            {# Les Lieux #}
+            Vous cherchez un professionnel sur ...
+            <ul>
+                {% for city in cities %}
+                    <li><a href="">{{city.city}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            Désolé, nous n'avons rien pour le moment
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

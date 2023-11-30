@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<main>
+    {# <section class="search">
+        <form>
+            <input type="text" placeholder="Rechercher un praticien">
+            <button type="submit">Rechercher</button>
+        </form>
+    </section> #}
+    <section class="doctors-list">
+        {% if doctors|length > 0 %}
+            <ul>
+                {% for doctor in doctors %} 
+                    <li>
+                        <img src="doctor1.jpg" alt="Docteur Nom1">
+                        <h2>{{doctor.user.firstname}} {{doctor.user.lastname}}</h2>
+                        {% if doctor.specialities|length > 0 %}
+                            {% for speciality in doctor.specialities %}
+                                <h3>{{speciality.title}}</h3>
+                            {% endfor %}
+                        {% endif %}
+                        <p>{{doctor.title}}</p>
+                        <p>{{doctor.address1}}<br>{{doctor.address2}}<br>{{doctor.zipcode}} {{doctor.city}}</p>
+                        {% if doctor.consultations|length > 0 %}
+                        <a href="{{path('app_rdv',{'id':doctor.id})}}">Prendre rendez-vous</a>
+                        {% endif %}
+                    </li> 
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>Pas encore de cabinets médicaux<br>Mais que fait la secu</h2>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+
+:root{
+    --font-title: "Agbalumo";
+}
+
+.font-title{font-family: var(--font-title);}
+
+body {
+    background-color: lightgray;
+}
